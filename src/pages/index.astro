@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ParallaxCard from "../components/ParallaxCard.astro";
+import "../styles/pages/_home.scss";
+
+const cardData = [
+  {
+    image: "/portfolio/retouching/images-avif/FOSSIL-kiara-varun.avif",
+    title: "Portfolio",
+    link: "/portfolio",
+  },
+  {
+    image: "/portfolio/retouching/images-avif/kiara-bride.avif",
+    title: "About",
+    link: "/about",
+  },
+  {
+    image: "/portfolio/retouching/images-avif/akshay-diwali.avif",
+    title: "Contact",
+    link: "/contact",
+  },
+];
+---
+
+<BaseLayout title="Home | Aditya Mhankale">
+  <div class="container">
+    {
+      cardData.map((card) => (
+        <a href={card.link}>
+          <ParallaxCard image={card.image}>
+            <h1 slot="header">{card.title}</h1>
+          </ParallaxCard>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  ParallaxCard:last-of-type {
+    background-position: top;
+  }
+</style>

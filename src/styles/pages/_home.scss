@@ -1,0 +1,29 @@
+// Core
+@import '../core/variables';
+
+// Base
+@import '../base/reset';
+@import '../base/typography';
+@import '../base/layout';
+
+// Components
+@import '../components/buttons';
+@import '../components/navbar';
+@import '../components/footer';
+
+
+body {
+    background: $primary;
+}
+
+h1 {
+    color: $text-primary;
+    font-weight: 400;
+}
+
+.container {
+    padding: 6rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

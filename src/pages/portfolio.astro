@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/pages/_portfolio.scss";
+import PhotoGallery from "../components/PhotoGallery.astro";
+import { readdirSync } from "node:fs";
+
+const portfolioDir = "./public/portfolio/retouching/images-avif";
+const imageExtensions = [".avif"];
+
+const portfolioImages = readdirSync(portfolioDir)
+    .filter((file) =>
+        imageExtensions.some((ext) => file.toLowerCase().endsWith(ext)),
+    )
+    .map((file) => `/portfolio/retouching/images-avif/${file}`);
+---
+
+<BaseLayout>
+    <div id="portfolio-container">
+        <PhotoGallery images={portfolioImages} />
+    </div>
+</BaseLayout>

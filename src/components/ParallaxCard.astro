@@ -1,0 +1,415 @@
+---
+interface Props {
+    image: string;
+}
+
+const { image } = Astro.props;
+const cardId = `card-${Math.random().toString(36).slice(2)}`;
+const lightboxId = `lightbox-${cardId}`;
+---
+
+<div class="card-wrap" data-card={cardId}>
+    <div class="card">
+        <div class="card-bg" style={`background-image: url(${image})`}></div>
+        <div class="card-info">
+            <slot name="header" />
+            <slot name="content" />
+        </div>
+    </div>
+</div>
+
+<!-- Lightbox Modal -->
+<div class="lightbox-overlay" id={lightboxId}>
+    <div class="lightbox-content">
+        <button class="lightbox-close" aria-label="Close lightbox">
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M18 6L6 18M6 6L18 18"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"></path>
+            </svg>
+        </button>
+        <div class="lightbox-image-container">
+            <img class="lightbox-image" src={image} alt="Full size image" />
+        </div>
+        <div class="lightbox-info">
+            <slot name="header" />
+            <slot name="content" />
+        </div>
+    </div>
+</div>
+
+<style lang="scss">
+    h1 {
+        color: white !important;
+    }
+    $hoverEasing: cubic-bezier(0.23, 1, 0.32, 1);
+    $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+
+    .card-wrap {
+        margin: 10px;
+        transform: perspective(800px);
+        transform-style: preserve-3d;
+        cursor: pointer;
+
+        &:hover {
+            .card-info {
+                transform: translateY(0);
+            }
+            .card-info p {
+                opacity: 1;
+            }
+            .card-info,
+            .card-info p {
+                transition: 0.6s $hoverEasing;
+            }
+            .card-info:after {
+                transition: 5s $hoverEasing;
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .card-bg {
+                transition:
+                    0.6s $hoverEasing,
+                    opacity 5s $hoverEasing;
+                opacity: 1;
+            }
+            .card {
+                transition:
+                    0.6s $hoverEasing,
+                    box-shadow 2s $hoverEasing;
+            }
+        }
+    }
+
+    .card {
+        position: relative;
+        flex: 0 0 240px;
+        width: 80vw;
+        height: 60vh;
+        overflow: hidden;
+        box-shadow: rgba(black, 0.66) 0 30px 60px 0;
+        transition: 1s $returnEasing;
+    }
+
+    .card-bg {
+        opacity: 0.4;
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        width: calc(100% + 40px);
+        height: calc(100% + 40px);
+        background-repeat: no-repeat;
+        background-position: 50% 10%;
+        background-size: cover;
+        transition:
+            1s $returnEasing,
+            opacity 5s 1s $returnEasing;
+        pointer-events: none;
+    }
+
+    .card-info {
+        padding: 20px;
+        position: absolute;
+        bottom: 0;
+        color: #fff !important;
+        transform: translateY(40%);
+        transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+        p {
+            opacity: 0;
+            text-shadow: rgba(black, 1) 0 2px 3px;
+            transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+            line-height: 1.5em;
+        }
+
+        h1 + p,
+        p + p {
+            margin-top: 10px;
+        }
+
+        * {
+            position: relative;
+            z-index: 1;
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background-blend-mode: overlay;
+            backdrop-filter: blur(100px);
+            // background-image: linear-gradient(
+            //     to bottom,
+            //     transparent 0%,
+            //     rgba(0, 0, 0, 0.8) 100%
+            // );
+            opacity: 0;
+            transform: translateY(100%);
+            transition: 5s 1s $returnEasing;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+            text-shadow: rgba(black, 0.5) 0 10px 10px;
+            margin: 0;
+        }
+    }
+
+    /* Lightbox Styles */
+    .lightbox-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+        padding: 20px;
+        box-sizing: border-box;
+
+        &.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    .lightbox-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+        display: flex;
+        // flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+        animation: lightboxFadeIn 0.3s ease;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 0px;
+        left: -150px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background-color 0.2s ease;
+        z-index: 10001;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        &:focus {
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+    }
+
+    .lightbox-image-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+        background-position: center;
+
+        max-height: 90vh;
+    }
+
+    .lightbox-image {
+        max-width: 100%;
+        max-height: 90vh;
+        height: auto;
+        width: auto;
+        object-fit: contain;
+        // margin-bottom: 1rem;
+        // background-position: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .lightbox-info {
+        text-align: center;
+        color: white;
+        max-width: 600px;
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: white !important;
+        }
+    }
+
+    @keyframes lightboxFadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .lightbox-close {
+            top: -20px;
+            right: 0px;
+        }
+
+        .lightbox-info {
+            margin-top: 15px;
+            padding: 0 10px;
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+        }
+
+        .lightbox-image-container {
+            max-height: 70vh;
+        }
+    }
+
+    /* Prevent body scroll when lightbox is open */
+    :global(body.lightbox-open) {
+        overflow: hidden;
+    }
+</style>
+<script define:vars={{ cardId, lightboxId }}>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cardWrap = document.querySelector(`[data-card="${cardId}"]`);
+        const lightboxOverlay = document.getElementById(lightboxId);
+
+        if (!cardWrap || !lightboxOverlay) return;
+
+        const card = cardWrap.querySelector(".card");
+        const cardBg = cardWrap.querySelector(".card-bg");
+        const lightboxClose = lightboxOverlay.querySelector(".lightbox-close");
+
+        let width = cardWrap.offsetWidth;
+        let height = cardWrap.offsetHeight;
+        let mouseX = 0;
+        let mouseY = 0;
+        let mouseLeaveDelay = null;
+        let isHovering = false;
+
+        function updateDimensions() {
+            width = cardWrap.offsetWidth;
+            height = cardWrap.offsetHeight;
+        }
+
+        function updateTransforms() {
+            const mousePX = mouseX / width;
+            const mousePY = mouseY / height;
+
+            const rX = mousePX * 30;
+            const rY = mousePY * -30;
+            card.style.transform = `rotateY(${rX}deg) rotateX(${rY}deg)`;
+
+            const tX = mousePX * -40;
+            const tY = mousePY * -40;
+            cardBg.style.transform = `translateX(${tX}px) translateY(${tY}px)`;
+        }
+
+        function handleMouseMove(e) {
+            if (!isHovering) return;
+
+            const rect = cardWrap.getBoundingClientRect();
+            mouseX = e.clientX - rect.left - width / 2;
+            mouseY = e.clientY - rect.top - height / 2;
+            updateTransforms();
+        }
+
+        function handleMouseEnter() {
+            isHovering = true;
+            if (mouseLeaveDelay) {
+                clearTimeout(mouseLeaveDelay);
+                mouseLeaveDelay = null;
+            }
+        }
+
+        function handleMouseLeave() {
+            isHovering = false;
+            mouseLeaveDelay = setTimeout(() => {
+                mouseX = 0;
+                mouseY = 0;
+                updateTransforms();
+            }, 300); // Reduced delay from 1000ms to 300ms
+        }
+
+        function openLightbox() {
+            lightboxOverlay.classList.add("active");
+            document.body.classList.add("lightbox-open");
+        }
+
+        function closeLightbox() {
+            lightboxOverlay.classList.remove("active");
+            document.body.classList.remove("lightbox-open");
+        }
+
+        // Event listeners for parallax effect
+        cardWrap.addEventListener("mousemove", handleMouseMove);
+        cardWrap.addEventListener("mouseenter", handleMouseEnter);
+        cardWrap.addEventListener("mouseleave", handleMouseLeave);
+        window.addEventListener("resize", updateDimensions);
+
+        // Event listeners for lightbox
+        cardWrap.addEventListener("click", openLightbox);
+        lightboxClose.addEventListener("click", closeLightbox);
+
+        // Close lightbox when clicking overlay (but not the content)
+        lightboxOverlay.addEventListener("click", (e) => {
+            if (e.target === lightboxOverlay) {
+                closeLightbox();
+            }
+        });
+
+        // Close lightbox with Escape key
+        document.addEventListener("keydown", (e) => {
+            if (
+                e.key === "Escape" &&
+                lightboxOverlay.classList.contains("active")
+            ) {
+                closeLightbox();
+            }
+        });
+
+        // Initialize
+        updateDimensions();
+        updateTransforms();
+    });
+</script>

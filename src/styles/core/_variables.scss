@@ -1,0 +1,31 @@
+// Colors
+$primary: #000000; // Main black for text and accents
+$secondary: #333333; // Dark gray for subtle elements
+$accent: #666666; // Medium gray for highlights and hovers
+$text-primary: #FFFFFF; // White for primary text on dark backgrounds
+$text-secondary: #CCCCCC; // Light gray for secondary text
+$text-dark: #000000; // Black for text on light backgrounds
+$background: #FFFFFF; // White for main backgrounds
+$surface: #F0F0F0; // Extra light gray for surfaces and cards
+
+// Typography
+$font-primary: 'Reddit Sans', sans-serif; // Elegant serif for headings and body
+$font-secondary: 'Helvetica Neue', Arial, sans-serif; // Clean sans-serif for navigation and utility text
+
+// Layout
+$max-width: 1200px; // Maximum container width
+$border-radius: 1px; // Subtle rounding for elements like cards and buttons
+
+// Spacing
+$space-xs: 0.5rem; // Tiny margins/padding
+$space-sm: 1rem; // Small spacing
+$space-md: 1.5rem; // Medium spacing for sections
+$space-lg: 2rem; // Large spacing
+$space-xl: 3rem; // Extra large for major gaps
+$space-xxl: 4rem; // Huge spacing for hero areas
+
+// Breakpoints
+$bp-sm: 576px; // Small screens (mobile)
+$bp-md: 768px; // Medium screens (tablet)
+$bp-lg: 992px; // Large screens (desktop)
+$bp-xl: 1200px; // Extra large screens (wide desktop)
