@@ -37,7 +37,12 @@ const lightboxId = `lightbox-${cardId}`;
             </svg>
         </button>
         <div class="lightbox-image-container">
-            <img class="lightbox-image" src={image} alt="Full size image" />
+            <img
+                class="lightbox-image"
+                src={image}
+                alt="Full size image"
+                fetchpriority="high"
+            />
         </div>
         <div class="lightbox-info">
             <slot name="header" />

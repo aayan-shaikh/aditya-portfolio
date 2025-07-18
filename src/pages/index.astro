@@ -5,24 +5,25 @@ import "../styles/pages/_home.scss";
 
 const cardData = [
   {
-    image: "/portfolio/retouching/images-avif/FOSSIL-kiara-varun.avif",
+    image:
+      "/compressed/portfolio/retouching/images-avif/FOSSIL-kiara-varun.avif",
     title: "Portfolio",
     link: "/portfolio",
   },
   {
-    image: "/portfolio/retouching/images-avif/kiara-bride.avif",
+    image: "/compressed/portfolio/retouching/images-avif/kiara-bride.avif",
     title: "About",
     link: "/about",
   },
   {
-    image: "/portfolio/retouching/images-avif/akshay-diwali.avif",
+    image: "/compressed/portfolio/retouching/images-avif/akshay-diwali.avif",
     title: "Contact",
     link: "/contact",
   },
 ];
 ---
 
-<BaseLayout title="Home | Aditya Mhankale">
+<BaseLayout>
   <div class="container">
     {
       cardData.map((card) => (

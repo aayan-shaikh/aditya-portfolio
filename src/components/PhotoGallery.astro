@@ -26,13 +26,13 @@ const { images, title = "Retouching Portfolio" } = Astro.props;
                 <div class="gallery-item" data-index={index}>
                     <img
                         src={image}
-                        alt={`Aayan's Photography work ${index + 1}`}
-                        loading={index < 6 ? "eager" : "lazy"}
+                        alt={`Aditya Mhankale Retouching Work ${index + 1}`}
                         class="gallery-image"
+                        width="100px"
                     />
                     <div class="image-overlay">
                         <button class="view-btn" data-image={image}>
-                            <svg
+                            {/* <svg
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
@@ -41,7 +41,7 @@ const { images, title = "Retouching Portfolio" } = Astro.props;
                                 stroke-width="2"
                             >
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                <circle cx="12" cy="12" r="3" />
+                                <circle cx="12" cy="12" r="3" /> */}
                             </svg>
                             View
                         </button>
@@ -132,15 +132,26 @@ const { images, title = "Retouching Portfolio" } = Astro.props;
     @media (max-width: 768px) {
         .gallery-grid {
             columns: 4;
-            column-gap: 1rem;
+            column-gap: 1.5rem;
+        }
+        .gallery-item {
+            /* margin-bottom: 10rem; */
         }
     }
 
     @media (max-width: 480px) {
         .gallery-grid {
-            margin-inline: 0.5rem;
+            padding-inline: 1.5rem;
+            margin-inline: auto;
+            column-gap: 1.5rem;
             columns: 3;
             /* column-gap: 0.5rem; */
+        }
+
+        .gallery-item {
+            /* outline: 10px solid lime; */
+
+            /* margin-bottom: 10rem; */
         }
     }
 

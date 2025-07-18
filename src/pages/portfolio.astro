@@ -4,14 +4,14 @@ import "../styles/pages/_portfolio.scss";
 import PhotoGallery from "../components/PhotoGallery.astro";
 import { readdirSync } from "node:fs";
 
-const portfolioDir = "./public/portfolio/retouching/images-avif";
+const portfolioDir = "./public/compressed/portfolio/retouching/images-avif";
 const imageExtensions = [".avif"];
 
 const portfolioImages = readdirSync(portfolioDir)
     .filter((file) =>
         imageExtensions.some((ext) => file.toLowerCase().endsWith(ext)),
     )
-    .map((file) => `/portfolio/retouching/images-avif/${file}`);
+    .map((file) => `/compressed/portfolio/retouching/images-avif/${file}`);
 ---
 
 <BaseLayout>

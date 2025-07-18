@@ -16,7 +16,7 @@ const navLinks = [
 
 const {
   title = "Aditya Mhankale | Fashion & Advertising Photographer",
-  description = "Mumbai-based photographer specializing in fashion and advertising photography with expertise in retouching and post-production.",
+  description = "Mumbai-based photographer and retoucher specializing in fashion and advertising photography with expertise in retouching and post-production.",
   image = "/adi.jpg",
   canonicalURL = "https://adityamhankale.com",
 } = Astro.props;
@@ -44,7 +44,10 @@ const {
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://adityamhankale.com/wa.png" />
+    <meta
+      property="og:image"
+      content="https://adityamhankale.com/compressed/wa.avif"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -55,15 +58,25 @@ const {
     <meta property="twitter:description" content={description} />
     <meta
       property="twitter:image"
-      content="https://adityamhankale.com/wa.png"
+      content="https://adityamhankale.com/compressed/wa.avif"
     />
     <meta property="twitter:image:width" content="1200" />
     <meta property="twitter:image:height" content="630" />
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link
+      rel="icon"
+      type="image/avif"
+      sizes="32x32"
+      href="/compressed/favicon-32x32.avif"
+    />
+    <link
+      rel="icon"
+      type="image/avif"
+      sizes="16x16"
+      href="/compressed/favicon-16x16.avif"
+    />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -114,7 +127,7 @@ const {
 
     <main>
       <div class="madeby">
-        Made with ❤️ by <a href="https://github.com/aayan-shaikh">Aayan</a>
+        Made with ❤️ by <a href="https://aayanshaikh.com/">Aayan</a>
       </div>
       <slot />
     </main>
